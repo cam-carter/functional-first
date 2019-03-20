@@ -83,19 +83,24 @@ class: middle
 
 ### You first language is important! (Right?)
 
-Your livelyhood is on the line most of the time.
+__Right!__
+- It sets the standard for learning future languages
+- The first language you learn impacts how you approach programming
+- You livelihood is on the line! What's gonna land you the best job?
 
-Whether it be university or a bootcamp, what you're learning is important for your career.
+.center[![Clipart computer](assets/images/clipart-computer.jpg)]
 
 ???
 
 So is your first language important?
 
-I think so. Most likely you're learning to program in order to get a job as a developer. I could be wrong their, but whether it be unversity or a tech bootcam, what you're learning is important for you career.
+I think so.
 
-But this comes with constraints.
+It sets the standard for learning future languages! Does this new language that your learning get you excited about programming? Do you want to learn more? Your first language can be very impactful to answering these questions.
 
-It's not necessarily the language that is important. You can learn C, Java, Python, Haskell, etc.
+Most likely you're learning to program in order to get a job as a developer. I could be wrong their, but whether it be unversity or a tech bootcamp, what you're learning is important for your career.
+
+But, it's not necessarily the language that is important. You can learn C, Java, Python, Haskell, etc.
 
 What really matters most is the paradigm!
 
@@ -163,6 +168,27 @@ But first, what even is functional programming?
 
 class: middle
 
+### Societal standards...
+
+We all learn an imperative and OO language first (well usually)
+
+__But why is OOP so popular?__<br>
+Well according to Joe Armstrong:
+1. It was thought to be easier to learn
+2. It was thought to make code reuser easier
+3. It was hyped
+4. It created a new software industry
+
+These are all valid points...
+
+???
+
+These are all valid points, but the same can be argued for functional programming nowadays. Well at least in my opinion, but I won't divulge too much.
+
+---
+
+class: middle
+
 ### So, what even is functional programming?
 
 > In computer science, functional programming is a __programming paradigm__—a style of building the structure and elements of computer programs—that treats computation as the evaluation of __mathematical functions__ and avoids __changing-state__ and __mutable__ data.
@@ -175,7 +201,7 @@ In computer science, functional programming is a __programming paradigm__-a styl
 
 The key difference functional languages have is that they are algorithm focused rather than data focused. Hence the term _functional_ programming. Programs are usually structured into functions that have smaller functions inside of them that sometimes even spit out other functions!
 
-They are devised to _airquotes_ strictly avoice changing-state and mutable data.
+They are designed to strictly avoid changing-state and mutable data.
 
 It's excited really, I swear
 
@@ -201,9 +227,12 @@ class: middle
 
 __Benefits of functional first:__
 - (Depending on the language) It's more human readable!
-- Programs are smaller and more modular
 - There's more focus on algorithmic composition
 - You don't have to worry about pesky side effects in your program
+- Programs are smaller and more modular
+- Applications have better scalability
+- Concurrency!
+
 
 ???
 
@@ -214,6 +243,37 @@ The first time I learned a functional language was in university when we were ta
 Looking back, after messing around with Lisp. I'm sure I just hyperbolized my situation into a bad experience, but boy oh boy, did that dissuade me from picking up functional programming again. I thought it was all like Scheme: hard to read, hard to understand, and don't even get me started about the parantheses.
 
 After this trauma, I picked up python.
+
+---
+
+class: middle
+
+### Take a gander
+
+```lisp
+(defun fibonacci (n &optional (a 0) (b 1) (acc ()))
+  (if (zerop n)
+      (nreverse acc)
+      (fibonacci (- 1 n) b (+ a b) (cons a acc))))
+
+(fibonacci 5) ; ==> (0 1 1 2 3)
+```
+
+???
+
+We all know what recursion is, and I learned that by writing Fibonacci's sequence and Towers of Hanoi over and over and over and over
+
+---
+
+class: middle, center
+
+<img src="assets/images/wut.jpg" alt="Wut" width="400">
+
+???
+
+But after looking at that for the first time, I suddenly lost all urge to dive further into functional programming.
+
+Why do we do this to ourselves? Or really the future generation of programmers? I'm not saying lisp is bad, but I believe that there's definetly a more approachable language to be teaching the functional paradigm.
 
 ---
 
@@ -232,34 +292,9 @@ __Here's probably why:__
 
 ???
 
-So for many years MIT taught Lisp as their introductory programming language. Most notably with the book _Structure and Interpretation of Computer Programs_. (which doesn't even introduce local assignment until 300 pages in)
+So for many years MIT taught Lisp as their introductory programming language. Most notably with the book _Structure and Interpretation of Computer Programs_. (which doesn't even introduce local assignment until 300 pages in btw)
 
 My guess is this was the standard because it introduces you to a lot of core concepts that become trivial to learn with other languages; there's not a whole lotta syntax to learn, so you can focus on these core concepts; and, there's already a lot of existing resources.
-
----
-
-class: middle
-
-### Fibonacci's Sequence in Lisp
-
-```lisp
-(defun fibonacci (n &optional (a 0) (b 1) (acc ()))
-  (if (zerop n)
-      (nreverse acc)
-      (fibonacci (1- n) b (+ a b) (cons a acc))))
-
-(fibonacci 5) ; ==> (0 1 1 2 3)
-```
-
----
-
-class: middle, center
-
-<img src="assets/images/wut.jpg" alt="Wut" width="400">
-
-???
-
-When my advisor in college told me he wrote his dissertation which simulated three dimensional acoustics in Common Lisp, I was shocked. How could anyone do this to themselves? In an effort not to offend, I won't ask the same about Emacs users.
 
 ---
 
@@ -282,13 +317,37 @@ class: middle
 ### Fibonacci's Sequence in Elixir
 
 ```elixir
-def fib(0), 0
-def fib(1), 1
-def fib(n), fib(n-1) + fib(n-2)
+def fibonacci(0), do: 0
+def fibonacci(1), do: 1
+def fibonacci(n), do: fibonacci(n - 1) + fibonacci(n - 2)
 
-Enum.map(1..5, & fib(&1)) # ==> [0, 1, 1, 2, 3]
+Enum.map(1..5, & fibonacci(&1)) # ==> [0, 1, 1, 2, 3]
 
 ```
+
+???
+
+This block of code accomplishes the same goals as the lisp example. But it's way easier to understand! Even if you don't know a darn thing about functional programming, it at least doesn't give you a headache.
+
+---
+
+class: middle
+
+### Getting more with less
+
+__What concepts did we just introduce?__
+- Pattern matching
+- variable assignent
+- Polymorphism
+- And even the `Enum` module from Elixir's standard library!
+
+???
+
+That's a lot of bang for out buck. Obviously, if I were creating a curriculum to teaching introductory programming with Elixir, I wouldn't throw all that stuff at you on day one. But entertain me for a moment!
+
+I like to think of functional languages as a series of learning plataeus, especially Elixir. A series of topics that you're gonna spend some amount of time on each of them. The first of which is thinking functionally, then pattern matching, etc.
+
+Climbing up the stairs, but occasionally coming back down because you missed something or there's something more to learn.
 
 ---
 
@@ -298,7 +357,7 @@ class: middle, center
 
 ???
 
-When I found Elixir, it was like a dream come true! I had a language that gave me all those benefits and more. And I never had to write a loop or conditional block again.
+When I found Elixir, it was like a dream come true! I had a language that gave me so much and asked for so little. And I never had to write a loop or conditional block again.
 
 Before I was writing with a functional language as a web developer, I was modeling low-level computations with Python (and not very good Python at that). So any shift away from that could be seen as positive.
 
@@ -306,19 +365,80 @@ Before I was writing with a functional language as a web developer, I was modeli
 
 class: middle
 
-### Fibonacci's Sequence in JavaScript
+### So what?
 
-```javascript
-function fibonacci(n) {
-  if (n == 0) return 0;
-  if (n == 1) return 1;
-  return fibonacci(n - 1) + fibonacci(n - 2);
-}
-```
+### Why is this idea of being introduced to more concepts quickly a good one?
+
+???
+
+Think of it as this: You're given a big box of tools (not power tools obviously), and you may not know how to use most of those tools. But at least you have them. And when you go to build you're first house, you might do everything with a hammer. But if you anthing like me, you're sure as hell gonna build that house.
+
+This is the philosphy I've gathered over my past 8 or so months with Elixir. I had all the tools there. I had documentation ready to go in my browser, but when I found a cool new tool in the box, that was the only one I used for about two weeks, and then I moved on to the next.
 
 ---
 
+class: middle, center
 
+<img src="assets/images/bob-the-builder.jpg" alt="BOB" width="45%">
+
+???
+
+This is just some bias to go with my metaphor.
+
+---
+
+class: middle
+
+### What else is good?
+
+__Well let's talk about algorithmic complexity__
+Since we don't have to keep up with the state of our program, we can put more focus into the structure of our functions and modules.
+
+Idempotence
+
+---
+
+scalability and modularity
+
+---
+
+concurrency
+
+---
+
+### But how can we change this?
+
+Teaching more accessible languages
+Giving new programmers choice
+
+---
+
+### Can we even do this?
+
+Probably not
+- OO dominates the industry, meaning most jobs are OO
+- Do people even care enough? People get comfortable, so why change things?
+
+???
+
+Honestly I've become comfortable, and I see myself writing Elixir for a the forseeable future
+
+---
+
+### There's still hope!
+
+Functional languages are growing in popularity. I mean otherwise I wouldn't be here right now, right?
+Large tech companies and high traffic startups are starting to shift more of their services to Elixir and Erlang
+- Netflix
+- Whatsapp
+- Discord
+- AirBnb
+
+---
+
+### Closing remarks
+
+---
 
     </textarea>
     <script src="https://remarkjs.com/downloads/remark-latest.min.js">
