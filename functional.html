@@ -12,19 +12,21 @@
         font-weight: normal;
       }
       .remark-code, .remark-inline-code { font-family: 'IBM Plex Mono'; }
+      .remark-slide-number { display: none; }
     </style>
   </head>
   <body>
     <textarea id="source">
 
-class: center, middle
+class: middle
 
 # Functional as a First Paradigm
 #### `Becoming Immutable in a Mutable World`
 
-<div style="font-size: .75em">github: @cam-carter<br>
-  twitter: @camn_carter
-</div>
+```
+github: @cam-carter
+twitter: @camn_carter
+```
 
 ---
 
@@ -36,7 +38,7 @@ __Here's a little bit about me:__
 - I'm not from here.
 - I graduated from university in __New Orleans__ with a degree in __Computer Science__
 - This happened in May, and I moved to __Cincinnati__ two weeks later.
-- I work at Gaslight, writing __Elixir__. (sadly some JavaScript, too)
+- I work at Gaslight, writing __Elixir__.
 - I also play music, have a __cat__, and ride a motorcycle.
 
 ???
@@ -66,12 +68,14 @@ class: middle
 1. Your first language is important. &#128187;
 2. Imperative and OOP dominate your early life as a programmer. &#128118;&#127995;
 2. Functional programming could prove to be a better option. &#128161;
-4. How can we change this? Can we even do that? &#10067;
-5. Should we event do that? &#129300;
+4. How can we change this? &#10067;
+5. Can we even do that? &#129300;
 
 ???
 
-Why should this matter to a new developer? And I'm asking this as a new developer.
+So here's some assumptions and questions I'm going to raise during this talk, so if you'd be so kind to listen.
+
+Why should all this matter to a new developer? And I'm asking this as a new developer.
 
 I've been doing this stuff for 8 months now, and all of those 8 months have been spent working on an Elixir application.
 
@@ -86,7 +90,7 @@ class: middle
 __Right!__
 - It sets the standard for learning future languages
 - The first language you learn impacts how you approach programming
-- You livelihood is on the line! What's gonna land you the best job?
+- Your livelihood is on the line! What's gonna land you the best job?
 
 .center[![Clipart computer](assets/images/clipart-computer.jpg)]
 
@@ -106,7 +110,7 @@ What really matters most is the paradigm!
 
 ---
 
-class: center, middle
+class: middle
 
 ## What the heck is a programming paradigm?
 
@@ -122,18 +126,20 @@ class: middle
 
 > A philosphical and theoretical framework of a scientific school or discipline within which theories, laws, and generalizations and the experiments performed in support of them are formulated.
 <br>
-> &nbsp; &nbsp; &mdash; _The Mirriam-Webstar Dictionary_
+> &nbsp; &nbsp; &mdash; _The Mirriam-WebStar Dictionary_
 
 __Or to keep it simple...__<br>
 A paradigm is just a pattern of different stuff about a thing
 
-A __programming paradigm__ is a way to classify a language based on its pattern and features.
+A __programming paradigm__ is a way to classify a language based on its patterns and features.
 
 ???
 
 A paradigm is a philosophical and theoretical framework of scientific school or discipline within which theories, laws, and generalizations and the experiments performed in support of them are formulated.
 
 To keep things simple: a paradigm is just a pattern of different stuff about a thing
+
+So a programming paradigm must be a way to classify languages based on their patterns
 
 ---
 
@@ -145,24 +151,22 @@ __Imperative__ and __Declarative__
 
 Imperative includes:
 - procedural - _groups instructions into um... procedures?_
-- object-oriented - _instructions are oriented into objects_
+- object-oriented - _...procedures are oriented into objects_
 
 Declarative includes:
-- functional - _the only one I truly understand_ &nbsp; &nbsp; &nbsp; <span style="color: #8e8e8e"># what we're gonna talk about</span>
+- functional - _the only one I sorta understand_ &nbsp; &nbsp; &nbsp; <span style="color: #8e8e8e"># what we're gonna talk about</span>
 - logical - _largely based on formal logic (e.g., Prolog)_
 - mathematical - _exactly how it sounds?_
 
 ???
 
-I like to think of programming paradigms separated into two big categories that have these sub-categories: imperative and declarative.
+I like to think of programming paradigms separated into two big categories: imperative and declarative.
 
 Most of you folks probaby probably learned an imperative language first and use it on a day-to-day basis. This includes: C++, Java, python, all that good stuff.
 
-But! You probably also use a declarative language everyday, too. And I'm talking about SQL. Whether your're an object-oriented developer or a functional one, in the end, we all have to use SQL.
+But! You probably also use a declarative language everyday, too. I'm talking about SQL. Whether your're an object-oriented developer or a functional one, in the end, we all have to use SQL.
 
 That's beside the point. I'm here to talk about my experience as a new developer only really understanding functional programming, and also why I think it could be a good choice for other newbies out there like myself.
-
-But first, what even is functional programming?
 
 ---
 
@@ -173,9 +177,8 @@ class: middle
 We all learn an imperative and OO language first (well usually)
 
 __But why is OOP so popular?__<br>
-Well according to Joe Armstrong:
 1. It was thought to be easier to learn
-2. It was thought to make code reuser easier
+2. It was thought to make code reuse easier
 3. It was hyped
 4. It created a new software industry
 
@@ -183,7 +186,18 @@ These are all valid points...
 
 ???
 
-These are all valid points, but the same can be argued for functional programming nowadays. Well at least in my opinion, but I won't divulge too much.
+We all learn OO before functional programming. But why? Well probably because it's what it used most.
+
+According to Joe Armstrong, the creator of Erlang (probably pretty biased against OO)
+
+1. It was thought to be easier to learn. (I disagree a little here)
+2. It was thought to make code reuse easier. (I also disagree with this one)
+3. It was hyped. (now we're getting to some truth)
+4. It created a new software industry.
+
+These are all valid points, but the same can be argued for functional programming nowadays.
+
+But what even is functional programming?
 
 ---
 
@@ -199,9 +213,11 @@ class: middle
 
 In computer science, functional programming is a __programming paradigm__-a style of building the structure and elements of computer programs-that treats computation as the evaluation of mathematical functions and avoids changing-state and mutable data.
 
-The key difference functional languages have is that they are algorithm focused rather than data focused. Hence the term _functional_ programming. Programs are usually structured into functions that have smaller functions inside of them that sometimes even spit out other functions!
+The key difference functional languages have is that they are algorithm focused rather than data focused. Hence the term _functional_ programming.
 
 They are designed to strictly avoid changing-state and mutable data.
+
+Programs are usually structured into functions that have smaller functions inside of them that sometimes even spit out other functions!
 
 It's excited really, I swear
 
@@ -240,9 +256,9 @@ Here's my shortlist of benefits for why a modern functional language could be a 
 
 The first time I learned a functional language was in university when we were taught Scheme. And let me tell you. That was the worst.
 
-Looking back, after messing around with Lisp. I'm sure I just hyperbolized my situation into a bad experience, but boy oh boy, did that dissuade me from picking up functional programming again. I thought it was all like Scheme: hard to read, hard to understand, and don't even get me started about the parantheses.
+Looking back, after messing around with Lisp. I'm sure I just hyperbolized my situation into a bad experience, but boy oh boy, did that dissuade me from picking up functional programming again. I thought it was all like Scheme: hard to read, hard to understand, and don't even get me started on the parantheses.
 
-After this trauma, I picked up python.
+I mean just take a gander for yourselves
 
 ---
 
@@ -251,19 +267,35 @@ class: middle
 ### Take a gander
 
 ```lisp
-(defun fibonacci (n &optional (a 0) (b 1) (acc ()))
-  (if (zerop n)
-      (nreverse acc)
-      (fibonacci (- 1 n) b (+ a b) (cons a acc))))
+(defun fibonacci (n)
+  (if (or (zerop n) (= n 1))
+      ; (zerop n) is (= n 0) which is really n == 0 for most of us
+      1
+    (+ (fibonacci (1- n)) (fibonacci (- n 2)))))
+    ; (1- n) is shortand for (- n 1) which is just n - 1
 
-(fibonacci 5) ; ==> (0 1 1 2 3)
+
+(fibonacci 5) ; ==> (3)
 ```
 
 ???
 
 We all know what recursion is, and I learned that by writing Fibonacci's sequence and Towers of Hanoi over and over and over and over
 
+But after looking at that for the first time, I suddenly lost all urge to dive further into functional programming.
+
+Let's go over this.
+
+1. We're defining the function fibonacci and taking one parameter n
+2. We're checking if n == 0 or n == 1, and if so returning just 1
+3. Then we get to the actual recursion that makes since
+
+The classic fib(n - 1) + fib(n - 2)
+
+But with the caveate of having to get through a lisp function
+
 ---
+
 
 class: middle, center
 
@@ -271,9 +303,7 @@ class: middle, center
 
 ???
 
-But after looking at that for the first time, I suddenly lost all urge to dive further into functional programming.
-
-Why do we do this to ourselves? Or really the future generation of programmers? I'm not saying lisp is bad, but I believe that there's definetly a more approachable language to be teaching the functional paradigm.
+That was a lot to handle, but let's pick out something important.
 
 ---
 
@@ -292,9 +322,22 @@ __Here's probably why:__
 
 ???
 
+Why do we do this to ourselves? Or really the future generation of programmers? I'm not saying lisp is bad, but I believe that there's definetly a more approachable language to be teaching the functional paradigm.
+
 So for many years MIT taught Lisp as their introductory programming language. Most notably with the book _Structure and Interpretation of Computer Programs_. (which doesn't even introduce local assignment until 300 pages in btw)
 
 My guess is this was the standard because it introduces you to a lot of core concepts that become trivial to learn with other languages; there's not a whole lotta syntax to learn, so you can focus on these core concepts; and, there's already a lot of existing resources.
+
+
+---
+
+class: middle, center
+
+<img src="assets/images/wut.jpg" alt="Wut" width="400">
+
+???
+
+That was a lot to handle, so is there a different way?
 
 ---
 
@@ -310,44 +353,78 @@ So, how do we get to that first benefits that I saw in functional programming? H
 
 That's where I think Elixir comes in. Now I don't want you all to think that this talk is secretly Elixir propaganda, but if you are enticed to learn it, I will also take credit for that.
 
+__change slide__
+
+But first let's backtrack a little
+
 ---
 
 class: middle
 
-### Fibonacci's Sequence in Elixir
+### = or =?
+
+__Did you catch that?__
+```
+(= n 1) is the same as n == 1
+```
+
+???
+
+Well that's because that equals sign is truly an equals sign.
+
+Not an `assigns` sign as we learn first off in OO
+
+This more closely relates to what we all learn before programming and that ladies and gentlemen is basic algebra
+
+x may equal y
+
+but 1 definetly doesn't = 2
+
+---
+
+class: middle
+
+### Fibonacci's Sequence in Erlang
+
+```erlang
+fibonacci(0) ->
+              0;
+fibonacci(1) ->
+              1;
+fibonacci(N) ->
+              fibonacci(N - 1) + fibonacci(N - 2).
+
+lists:map(fibonacci/1, lists:seq(0, 4)) % ==> [0, 1, 1, 2, 3]
+```
+
+???
+
+Again there's a lot more going on. A little easier to read, but still a lot.
+
+So we've got 3 different functions with the same name. What's up with that?
+
+Two Words: Pattern Matching
+
+---
+
+class: middle
+
+### And then there's Elixir
 
 ```elixir
 def fibonacci(0), do: 0
 def fibonacci(1), do: 1
 def fibonacci(n), do: fibonacci(n - 1) + fibonacci(n - 2)
 
-Enum.map(1..5, & fibonacci(&1)) # ==> [0, 1, 1, 2, 3]
+Enum.map(0..4, & fibonacci(&1)) # ==> [0, 1, 1, 2, 3]
 
 ```
 
 ???
 
-This block of code accomplishes the same goals as the lisp example. But it's way easier to understand! Even if you don't know a darn thing about functional programming, it at least doesn't give you a headache.
+It's way easier to understand! Even if you don't know a darn thing about functional programming, it at least doesn't give you a headache by looking at it.
 
----
-
-class: middle
-
-### Getting more with less
-
-__What concepts did we just introduce?__
-- Pattern matching
-- variable assignent
-- Polymorphism
-- And even the `Enum` module from Elixir's standard library!
-
-???
-
-That's a lot of bang for out buck. Obviously, if I were creating a curriculum to teaching introductory programming with Elixir, I wouldn't throw all that stuff at you on day one. But entertain me for a moment!
-
-I like to think of functional languages as a series of learning plataeus, especially Elixir. A series of topics that you're gonna spend some amount of time on each of them. The first of which is thinking functionally, then pattern matching, etc.
-
-Climbing up the stairs, but occasionally coming back down because you missed something or there's something more to learn.
+But why this? Well We're getting more with less.
 
 ---
 
@@ -357,6 +434,21 @@ class: middle, center
 
 ???
 
+__What concepts did we just introduce?__
+- Pattern matching
+- Variable assignent
+- Polymorphism
+- And even the `Enum` module from Elixir's standard library!
+
+That's a lot of bang for our buck. Obviously, if I were creating a curriculum teaching introductory programming with Elixir, I wouldn't throw all that stuff at you on day one. But entertain me for a moment!
+
+I like to think of functional languages as a series of learning plataeus, especially Elixir. A series of topics that you're gonna spend some amount of time on each of them. The first of which is thinking functionally, then pattern matching, etc.
+
+Climbing up the stairs, but occasionally coming back down because you missed something or there's something more to learn.
+
+
+__change slide__
+
 When I found Elixir, it was like a dream come true! I had a language that gave me so much and asked for so little. And I never had to write a loop or conditional block again.
 
 Before I was writing with a functional language as a web developer, I was modeling low-level computations with Python (and not very good Python at that). So any shift away from that could be seen as positive.
@@ -365,25 +457,17 @@ Before I was writing with a functional language as a web developer, I was modeli
 
 class: middle
 
-### So what?
+### __So what?__
 
 ### Why is this idea of being introduced to more concepts quickly a good one?
 
 ???
 
-Think of it as this: You're given a big box of tools (not power tools obviously), and you may not know how to use most of those tools. But at least you have them. And when you go to build you're first house, you might do everything with a hammer. But if you anthing like me, you're sure as hell gonna build that house.
+But so what? Why is this idea of being introduced to more concepts quickly a good one?
+
+Think of it as this: You're given a big box of tools (not power tools obviously), and you may not know how to use most of those tools. But at least you have them. And when you go to build you're first house, you might do everything with a hammer. But if you're anthing like me, you're sure as hell gonna build that house with just a hammer.
 
 This is the philosphy I've gathered over my past 8 or so months with Elixir. I had all the tools there. I had documentation ready to go in my browser, but when I found a cool new tool in the box, that was the only one I used for about two weeks, and then I moved on to the next.
-
----
-
-class: middle, center
-
-<img src="assets/images/bob-the-builder.jpg" alt="BOB" width="45%">
-
-???
-
-This is just some bias to go with my metaphor.
 
 ---
 
@@ -391,33 +475,123 @@ class: middle
 
 ### What else is good?
 
-__Well let's talk about algorithmic complexity__
-Since we don't have to keep up with the state of our program, we can put more focus into the structure of our functions and modules.
+__Functional code is idempotent__
+> The output of a function only depends on the arguments passed in, so you can call a function twice (or however many times) and always receive the same value. No side effects, no worries.
 
-Idempotence
+__Functional code is *sometimes* easier to work with__
+> Since the output of our functions don't depend on any local or global state, we can much more easily understand and predict the behaviour of our program.
+
+_So why is all this good for a new developer?_
+
+???
+
+Being new to programming is sometimes overwhelming, so when you don't have to worry about things like side effects in your program or the lack of referential transparency, you can focus more on the structure of your functions and their use.
+
+This can also be translated to tangible skills in the workplace, especially when you're practicing concepts like Test Driven Development.
+
+Personally, I was put on a massive Elixir application that implemented a plethora of higher level concepts than I was used to like event-sourcing and caching.
+
+However, there wasn't the concern of implementing a smaller, easier feature and bringing the rest of the application crashing down with me.
+
+That's exactly how I've built up my knowledge so far. I started on these smaller features and eventually made my way to the more difficult concepts used in the application.
 
 ---
 
-scalability and modularity
+class: middle
+
+### It's good for you (the not-new developer), too!
+
+__Your application could benefit__
+> The lack of side effects and state management allow for greater scalability and modularity for applications.
+
+__Tests and more tests__
+> Less side effects means better testing; better testing means less bugs; and less bugs means happier developers.
+
+???
+
+It's difficult for me to draw too many comparisons between developing an application with a functional language and an OO language, seeing as I don't have that much experience with the latter. But, from the little I do have, I can certainly say that I have had an easier experience overall with adding features and writing tests and refactoring existing code.
+
+These are all things we have to deal with on a day-to-day basis, so why not make it easier on ourselves?
 
 ---
 
-concurrency
+class: middle, center
+
+<img src="assets/images/coke-and-mentos.jpg" alt="Scaling is hard?" width="60%">
+
+???
+
+We definetly don't want to be caught in the situation where something like this could happen. But functional or not, depending on the circumstances, it can be difficult to avoid this.
 
 ---
 
-### But how can we change this?
+class: middle
 
-Teaching more accessible languages
-Giving new programmers choice
+### Concurrency!
+
+__Applications are depending more on concurrent processes__
+> So why not write those applications in a language that avoids negatively affecting the final outcome of concurrent processes?
+
+__We see more companies needing to handle many users__
+> Erlang was built over 30 years ago for this exact reason! When you've got a whole bunch of people trying to do the same thing at the same time, why not use a techonolgy meant for that?
+
+???
+
+As we see technology grow and the industry change, we're seeing more use cases for functional systems. We've got more users than ever, so why not build concurrent systems to handle those users?
 
 ---
+
+class: middle, center
+
+<img src="assets/images/no-idea.jpg" alt="I have no idea">
+
+???
+
+I want to disclaim here that even with all these good things functional brings early in the game, it can still feel like you have literally no clue what you're doing.
+
+I think that goes without saying when writing software.
+
+---
+
+class: middle
+
+### So... what next?
+
+__How can we change the way things are?__
+> We can start by teaching more accessible functional languages that don't scare people away. This means getting modern functional languages into college curriculums and bootcamps.
+
+__What about the right to choose?__
+> Let's give new programmers a choice by offering an OO track and functional track. And why not do both? As software changes shouldn't we change the way we're teaching people how to make it?
+
+???
+
+So what next? How do we actually change things, so we start encouraging new programmers to learn functional languages?
+
+We can start by teaching languages that don't scare off newbies like myself, but that means we have to start teaching them at all.
+
+Why not give new programmers choice? Offer an OO track and a functional track and even mix the two. There's benefits to both, but so far learning to code has been a one-sided story.
+
+---
+
+class: middle, center
+
+<img src="assets/images/yes-but-no.jpg" alt="Yes but no" width="90%">
+
+???
+
+Can we change the way things are?
+
+---
+
+class: middle
 
 ### Can we even do this?
 
-Probably not
-- OO dominates the industry, meaning most jobs are OO
-- Do people even care enough? People get comfortable, so why change things?
+__Probably not__
+> OO dominates the industry, meaning most jobs are using that paradigm. And if that's where the jobs are, then that's what we're going to teach people, and that's what new programmers are going to want to learn.
+
+__Do we care to?__
+> Pople get comfortable, so why change things? I don't expect large companies with legacy software to spend the time and money to start using functional languages.
 
 ???
 
@@ -425,18 +599,34 @@ Honestly I've become comfortable, and I see myself writing Elixir for a the fors
 
 ---
 
-### There's still hope!
+class: middle
 
-Functional languages are growing in popularity. I mean otherwise I wouldn't be here right now, right?
-Large tech companies and high traffic startups are starting to shift more of their services to Elixir and Erlang
-- Netflix
-- Whatsapp
-- Discord
-- AirBnb
+### But, there's still hope!
+
+__Functional languages are growing in popularity__
+> We're currently seeing a rise in community around functional languages, especially Elixir. People are starting to see and use it as a viable alternative to current technologies.
+
+__Adoption by the industry__
+> Larger companies and high-traffic startups are starting to shift more of their services to and built on Elixir and Erlang (e.g., Netflix, Whatsapp, Discord). Which means the potential for more functional jobs in the industry for juniors like myself.
 
 ---
 
-### Closing remarks
+class: middle, center
+
+<img src="assets/images/so-long.jpg" alt="So long and thanks for all the fish." width="80%">
+
+---
+
+class: middle
+
+### Shout out to:
+Wikipedia<br>
+Stackoverflow stranger for lisp code<br>
+Dave Thomas for Elixir code<br>
+Joe Armstrong<br>
+Reddit for the memes<br>
+College professors who made me hate functional programming<br>
+JavaScript for being the beautiful mess that it is
 
 ---
 
